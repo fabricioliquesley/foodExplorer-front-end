@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { DEVICE_BREAKPOINT } from "./deviceBreakPoint";
 
 export default createGlobalStyle`
     * {
@@ -17,6 +18,10 @@ export default createGlobalStyle`
     body {
         background-color: ${({ theme }) => theme.COLORS.DARK.DARK400};
         font-size: 1.2rem;
+
+        @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
+            font-size: 1.6rem;
+        }
     }
 
     body, input, button {
