@@ -7,7 +7,8 @@ export const Container = styled.div`
     height: 100vh;
     
     > main {
-        overflow: ${({$statusMenu}) => $statusMenu == "open" ? "hidden" : "visible"};
+        overflow: ${({$statusMenu}) => $statusMenu == "open" ? "hidden" : "auto"};
         position: relative;
+        padding-bottom: 6.2rem;
     }
 `;

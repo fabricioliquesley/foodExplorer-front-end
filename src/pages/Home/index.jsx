@@ -20,45 +20,57 @@ export function Home() {
 
     const data = [
         {
-            "image_path": "images/strogonoff.png",
-            "name": "Strogonoff de Frango",
-            "category": "Prato Principal",
-            "ingredients": [
+            image_path: "/src/assets/mail_example.png",
+            name: "Strogonoff de Frango",
+            category: "Prato Principal",
+            ingredients: [
                 "frango",
                 "creme de leite",
                 "molho de tomate",
                 "cogumelos champignon"
             ],
-            "preco": 19.95,
-            "description": "Um delicioso prato feito com ingredientes de extrema qualidade, serve 1 pessoa. Acompanha arroz e batata palha."
+            preco: 19.95,
+            description: "Um delicioso prato feito com ingredientes de extrema qualidade, serve 1 pessoa. Acompanha arroz e batata palha."
         },
         {
-            "image_path": "images/carbonara.png",
-            "name": "Macarrão à Carbonara",
-            "category": "Prato Principal",
-            "ingredients": [
+            image_path: "/src/assets/mail_example.png",
+            name: "Macarrão à Carbonara",
+            category: "Prato Principal",
+            ingredients: [
                 "macarrão",
                 "bacon",
                 "ovos",
                 "queijo parmesão"
             ],
-            "preco": 17.50,
-            "description": "Um prato clássico italiano, preparado com bacon crocante, ovos cremosos e queijo parmesão. Serve 1 pessoa."
+            preco: 17.50,
+            description: "Um prato clássico italiano, preparado com bacon crocante, ovos cremosos e queijo parmesão. Serve 1 pessoa."
         },
         {
-            "image_path": "images/risoto.png",
-            "name": "Risoto de Camarão",
-            "category": "Prato Principal",
-            "ingredients": [
+            image_path: "/src/assets/mail_example.png",
+            name: "Risoto de Camarão",
+            category: "Prato Principal",
+            ingredients: [
                 "arroz arbóreo",
                 "camarão",
                 "creme de leite",
                 "queijo parmesão"
             ],
-            "preco": 23.99,
-            "description": "Risoto cremoso preparado com camarões frescos, servido com uma generosa porção de queijo parmesão ralado. Serve 1 pessoa."
-        }
-        
+            preco: 23.99,
+            description: "Risoto cremoso preparado com camarões frescos, servido com uma generosa porção de queijo parmesão ralado. Serve 1 pessoa."
+        },
+        {
+            image_path: "/src/assets/mail_example.png",
+            name: "Strogonoff de Carne",
+            category: "Prato Principal",
+            ingredients: [
+                "carne",
+                "creme de leite",
+                "molho de tomate",
+                "cogumelos champignon"
+            ],
+            preco: 19.95,
+            description: "Um delicioso prato feito com ingredientes de extrema qualidade, serve 1 pessoa. Acompanha arroz e batata palha."
+        },
     ]
 
     return (
@@ -72,6 +84,8 @@ export function Home() {
                 <Menu status={statusMenu} />
                 <Banner />
                 <Slider title={"Refeições"} data={data}/>
+                <Slider title={"Pratos principais"} data={data}/>
+                <Slider title={"Bebidas"} data={data}/>
             </main>
             <Footer />
         </Container>
