@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 
 export const Container = styled.header`
-    position: sticky;
+    /* position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 3; */
     display: flex;
     align-items: center;
     justify-content: space-between;

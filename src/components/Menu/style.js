@@ -11,6 +11,7 @@ export const Container = styled.menu`
     transform: ${({$status}) => $status == "open" ? "translateX(0%)" : "translateX(-100%)"};
     transition: .4s;
     padding: 2rem;
+    z-index: 3;
 
     > button {
         text-align: start;
