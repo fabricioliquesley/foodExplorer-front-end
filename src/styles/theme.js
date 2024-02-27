@@ -30,6 +30,9 @@ export default {
             MINT100: "#04D361",
             CAKE100: "#065E7C",
             CAKE200: "#82F3FF"
+        },
+        GRADIENTS: {
+            GRADIENTS200: "linear-gradient(180deg, #091E26 0%, #00131C 100%)"
         }
     }
 }

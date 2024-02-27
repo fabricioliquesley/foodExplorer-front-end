@@ -5,7 +5,6 @@ export const Container = styled.div`
     grid-template-rows: 11.4rem 1fr max-content;
     width: 100%;
     height: 100vh;
-
     
     > main {
         overflow: ${({$statusMenu}) => $statusMenu == "open" ? "hidden" : "visible"};
