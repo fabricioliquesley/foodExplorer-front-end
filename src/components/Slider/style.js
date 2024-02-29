@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { DEVICE_BREAKPOINT } from "../../styles/deviceBreakPoint";
 
 export const Container = styled.div`
     display: flex;
@@ -13,9 +14,9 @@ export const Container = styled.div`
         color: ${({ theme }) => theme.COLORS.LIGHT.LIGHT300};
     }
 
-    > .slider {
+    .slider {
         width: 100%;
-
+        
         .slide {
             display: flex;
             flex-direction: column;
@@ -82,5 +83,37 @@ export const Container = styled.div`
                 width: 100%;
             }
         }
+    }
+
+    .navigation {
+        position: relative;
+    }
+
+    .arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        width: 3rem;
+        height: 3rem;
+        fill: #fff;
+        cursor: pointer;
+    }
+
+    .arrow--left {
+        left: 5px;
+    }
+
+    .arrow--right {
+        left: auto;
+        right: 5px;
+    }
+
+    .arrow--disabled {
+        fill: rgba(255, 255, 255, 0.5);
+    }
+
+    @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
+        padding: 0;
     }
 `;
