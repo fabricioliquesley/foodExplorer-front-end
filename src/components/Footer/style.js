@@ -17,4 +17,8 @@ export const Container = styled.footer`
     @media (max-width: ${DEVICE_BREAKPOINT.XS}) {
         flex-direction: column;
     }
+
+    @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
+        padding: 2.4rem 12.3rem;
+    }
 `;
