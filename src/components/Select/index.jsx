@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Container, Options } from "./style";
 import { IoIosArrowDown } from "react-icons/io";
 
-export function Select({ label }) {
+export function Select({ label, className }) {
     const options = [
         "Refeição",
         "Prato principal",
@@ -23,11 +23,12 @@ export function Select({ label }) {
     }
 
     return (
-        <Container $selectStatus={selectStatus}>
+        <Container $selectStatus={selectStatus} className={className}>
             <label htmlFor="">{label}</label>
             <div 
                 className="select" 
-                onClick={() => toggleSelectStatus()}
+                onClick={toggleSelectStatus}
+                onBlur={() => toggleSelectStatus()}
             >
                 <p>{selected}</p>
                 <IoIosArrowDown size={24} />

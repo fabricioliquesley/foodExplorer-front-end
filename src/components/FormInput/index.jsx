@@ -1,9 +1,9 @@
 import { Container } from "./style";
 import { FiUpload } from "react-icons/fi";
 
-export function FormInput({ label, variant, ...res }) {
+export function FormInput({ label, variant, className, ...res }) {
     return (
-        <Container $variant={variant}>
+        <Container $variant={variant} className={className}>
             <label htmlFor="inputLabel">{label}</label>
             <div>
                 {

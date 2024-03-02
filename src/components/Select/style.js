@@ -1,6 +1,8 @@
 import { styled } from "styled-components";
+import { DEVICE_BREAKPOINT } from "../../styles/deviceBreakPoint";
 
 export const Container = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
@@ -23,14 +25,14 @@ export const Container = styled.div`
         border-radius: 0.5rem;
 
         svg {
-            transform: ${({$selectStatus}) => $selectStatus == "open" ? "rotate(180deg)" : "rotate(0deg)"};
+            transform: ${({ $selectStatus }) => $selectStatus == "open" ? "rotate(180deg)" : "rotate(0deg)"};
             transition: .4s;
         }
     }
 `;
 
 export const Options = styled.ul`
-    display: ${({$selectStatus}) => $selectStatus == "open" ? "flex" : "none"};
+    display: ${({ $selectStatus }) => $selectStatus == "open" ? "flex" : "none"};
     flex-direction: column;
     gap: 1rem;
     width: 100%;
@@ -40,4 +42,10 @@ export const Options = styled.ul`
     padding: 1.6rem;
     border-radius: 0.5rem;
     list-style: none;
+
+    @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
+        position: absolute;
+        top: 10rem;
+        z-index: 1;
+    }
 `;
