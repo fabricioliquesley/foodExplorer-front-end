@@ -1,7 +1,7 @@
 import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
 import { Menu } from "../../components/Menu";
-import { Container, Content, Tags } from "./style";
+import { Container, Content, Tags, Left, Right } from "./style";
 import { Link } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { HiMiniMinus, HiMiniPlus } from "react-icons/hi2";
@@ -67,46 +67,50 @@ export function MealDetails() {
                     />
                 }
                 <Content>
-                    <Link to={-1} className="poppins-medium">
-                        <IoIosArrowBack />
-                        voltar
-                    </Link>
-                    <img src={meal.image_path} alt="Imagem ilustrativa do prato" />
-                    <div className="mealDetails">
-                        <h3 className="poppins-medium">{meal.name}</h3>
-                        <p className="poppins-light">
-                            {meal.description}
-                        </p>
-                        <div className="ingredientsContainer">
-                            {
-                                meal.ingredients.map((ingredient, index) => (
-                                    <Tags key={index}>{ingredient}</Tags>
-                                ))
-                            }
+                    <Left>
+                        <Link to={-1} className="poppins-medium">
+                            <IoIosArrowBack />
+                            voltar
+                        </Link>
+                        <img src={meal.image_path} alt="Imagem ilustrativa do prato" />
+                    </Left>
+                    <Right>
+                        <div className="mealDetails">
+                            <h3 className="poppins-medium">{meal.name}</h3>
+                            <p className="poppins-light">
+                                {meal.description}
+                            </p>
+                            <div className="ingredientsContainer">
+                                {
+                                    meal.ingredients.map((ingredient, index) => (
+                                        <Tags key={index}>{ingredient}</Tags>
+                                    ))
+                                }
+                            </div>
                         </div>
-                    </div>
-                    <div className="amountControls">
-                        <div>
-                            <button
-                                onClick={() => decrementItemAmount()}
-                            >
-                                <HiMiniMinus size={20}/>
-                            </button>
-                            <span className='roboto-regular'>
-                                {String(itemAmount).padStart(2, "0")}
-                            </span>
-                            <button
-                                onClick={() => incrementItemAmount()}
-                            >
-                                <HiMiniPlus size={20}/>
+                        <div className="amountControls">
+                            <div>
+                                <button
+                                    onClick={() => decrementItemAmount()}
+                                >
+                                    <HiMiniMinus size={20}/>
+                                </button>
+                                <span className='roboto-regular'>
+                                    {String(itemAmount).padStart(2, "0")}
+                                </span>
+                                <button
+                                    onClick={() => incrementItemAmount()}
+                                >
+                                    <HiMiniPlus size={20}/>
+                                </button>
+                            </div>
+                            <button>
+                                <PiReceipt size={20}/>
+                                pedir ∙ 
+                                R$ {String(meal.preco).replace(".", ",")}
                             </button>
                         </div>
-                        <button>
-                            <PiReceipt size={20}/>
-                            pedir ∙ 
-                            R$ {String(meal.preco).replace(".", ",")}
-                        </button>
-                    </div>
+                    </Right>
                 </Content>
             </main>
             <Footer />

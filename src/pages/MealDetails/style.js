@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { DEVICE_BREAKPOINT } from "../../styles/deviceBreakPoint";
 
 export const Container = styled.div`
 position: relative;
@@ -26,6 +27,18 @@ export const Content = styled.div`
         color: ${({ theme }) => theme.COLORS.LIGHT.LIGHT300};
     }
 
+    @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
+        flex-direction: row;
+        max-width: 100%;
+    }
+`;
+
+export const Left = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
     > a {
         display: flex;
         align-items: center;
@@ -38,7 +51,17 @@ export const Content = styled.div`
         width: 100%;
         max-width: 26rem;
         margin: 1.6rem 0;
+
+        @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
+            max-width: 39rem;
+        }
     }
+`;
+
+export const Right = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     > .mealDetails {
         display: flex;
@@ -92,6 +115,22 @@ export const Content = styled.div`
             padding: 0.8rem 1.6rem;
             border: none;
             border-radius: 0.3rem;
+        }
+    }
+
+    @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
+        align-items: flex-start;
+
+        > .mealDetails {
+            text-align: start;
+
+            h3 {
+                font-size: 4rem;
+            }
+    
+            .ingredientsContainer {
+                justify-content: flex-start;
+            }
         }
     }
 `;
