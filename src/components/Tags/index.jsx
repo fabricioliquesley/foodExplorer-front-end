@@ -1,30 +1,22 @@
-import { Container, Tag } from "./style";
+import { Container } from "./style";
 import { GoPlus } from "react-icons/go";
-import { IoCloseOutline } from "react-icons/io5";
 
-export function Tags({ label, data }) {
+export function Tags({ label, className, children, addClick, ...res }) {
+
     return (
-        <Container>
+        <Container className={className}>
             <label htmlFor="">{label}</label>
             <div>
                 <div className="tags">
-                    {
-                        data.map((tag, index) => (
-                            <Tag key={index}>
-                                <p>{tag}</p>
-                                <button>
-                                    <IoCloseOutline size={20} />
-                                </button>
-                            </Tag>
-                        ))
-                    }
+                    {children}
                 </div>
                 <div className="addTag">
                     <input
                         type="text"
                         placeholder="Adicionar"
+                        {...res}
                     />
-                    <button>
+                    <button onClick={addClick}>
                         <GoPlus size={20} />
                     </button>
                 </div>
