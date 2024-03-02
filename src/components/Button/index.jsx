@@ -1,8 +1,13 @@
 import { Container } from "./style";
 
-export function Button({title, ...res}){
+export function Button({ title, className, variant, ...res }) {
     return (
-        <Container {...res}>
+        <Container
+            className={className}
+            $variant={variant}
+            {...res}
+            disabled={variant}
+        >
             {title}
         </Container>
     )
