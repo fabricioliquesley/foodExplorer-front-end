@@ -11,9 +11,8 @@ position: relative;
 
     > main {
         overflow: ${({ $statusMenu }) => $statusMenu == "open" ? "hidden" : "auto"};
-        padding: 3.36rem 0;
     }
-`;
+    `;
 
 export const Content = styled.div`
     display: flex;
@@ -22,6 +21,7 @@ export const Content = styled.div`
     width: 90%;
     max-width: 34rem;
     margin: 0 auto;
+    padding: 3.36rem 0;
 
     & * {
         color: ${({ theme }) => theme.COLORS.LIGHT.LIGHT300};
@@ -87,6 +87,17 @@ export const Right = styled.div`
         }
     }
 
+    > .editBtn, .amountControls > button {
+        width: 100%;
+        background: ${({ theme }) => theme.COLORS.TINTS.TOMATO100};
+        text-align: center;
+        font-size: 1.4rem;
+        padding: 1.2rem 2.4rem;
+        border: none;
+        border-radius: 0.3rem;
+        margin-top: 4.8rem;
+    }
+
     > .amountControls {
         display: flex;
         gap: 1.6rem;
@@ -110,16 +121,18 @@ export const Right = styled.div`
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            background: ${({ theme }) => theme.COLORS.TINTS.TOMATO100};
             font-size: 0.9rem;
             padding: 0.8rem 1.6rem;
-            border: none;
-            border-radius: 0.3rem;
+            margin: 0;
         }
     }
 
     @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
         align-items: flex-start;
+
+        .editBtn {
+            width: fit-content;
+        }
 
         > .mealDetails {
             text-align: start;

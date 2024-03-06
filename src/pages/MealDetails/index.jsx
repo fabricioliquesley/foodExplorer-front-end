@@ -7,6 +7,8 @@ import { IoIosArrowBack } from "react-icons/io";
 import { HiMiniMinus, HiMiniPlus } from "react-icons/hi2";
 import { PiReceipt } from "react-icons/pi";
 
+import { ACCOUNT_TYPE } from "../../utils/accountType";
+
 import { useState } from "react";
 
 export function MealDetails() {
@@ -52,18 +54,24 @@ export function MealDetails() {
         description: "Um delicioso prato feito com ingredientes de extrema qualidade, serve 1 pessoa. Acompanha arroz e batata palha."
     }
 
+    const user = {
+        accountType: "admin"
+    }
+
     return (
         <Container $statusMenu={statusMenu}>
             <Header
                 menuStatus={statusMenu}
                 orderAmount={5}
                 onClick={() => toggleMenu()}
+                variant={user.accountType}
             />
             <main>
                 {
                     width < 1024 &&
                     <Menu
                         status={statusMenu}
+                        variant={user.accountType}
                     />
                 }
                 <Content>
@@ -88,28 +96,38 @@ export function MealDetails() {
                                 }
                             </div>
                         </div>
-                        <div className="amountControls">
-                            <div>
-                                <button
-                                    onClick={() => decrementItemAmount()}
+                        {
+                            [ACCOUNT_TYPE.ADMIN].includes(user.accountType) ?
+                                <Link 
+                                    to={"/edit/4f474d2f-eb71-4ac9-88c7-3a0aabb8e261"}
+                                    className="editBtn"
                                 >
-                                    <HiMiniMinus size={20}/>
-                                </button>
-                                <span className='roboto-regular'>
-                                    {String(itemAmount).padStart(2, "0")}
-                                </span>
-                                <button
-                                    onClick={() => incrementItemAmount()}
-                                >
-                                    <HiMiniPlus size={20}/>
-                                </button>
-                            </div>
-                            <button>
-                                <PiReceipt size={20}/>
-                                pedir ∙ 
-                                R$ {String(meal.preco).replace(".", ",")}
-                            </button>
-                        </div>
+                                    Editar prato
+                                </Link>
+                                :
+                                <div className="amountControls">
+                                    <div>
+                                        <button
+                                            onClick={() => decrementItemAmount()}
+                                        >
+                                            <HiMiniMinus size={20} />
+                                        </button>
+                                        <span className='roboto-regular'>
+                                            {String(itemAmount).padStart(2, "0")}
+                                        </span>
+                                        <button
+                                            onClick={() => incrementItemAmount()}
+                                        >
+                                            <HiMiniPlus size={20} />
+                                        </button>
+                                    </div>
+                                    <button>
+                                        <PiReceipt size={20} />
+                                        pedir ∙
+                                        R$ {String(meal.preco).replace(".", ",")}
+                                    </button>
+                                </div>
+                        }
                     </Right>
                 </Content>
             </main>
