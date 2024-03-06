@@ -2,13 +2,14 @@ import { Container } from './style';
 import { Button } from "../Button";
 import { HiMiniMinus, HiMiniPlus } from "react-icons/hi2";
 import { CiHeart } from "react-icons/ci";
+import { PiPencilSimple } from "react-icons/pi";
 
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 
 import { useState } from 'react';
 
-export function Slider({ title, data }) {
+export function Slider({ title, data, variant }) {
     // Mudanças
     const [currentSlide, setCurrentSlide] = useState(0);
     const [loaded, setLoaded] = useState(false);
@@ -80,6 +81,10 @@ export function Slider({ title, data }) {
         setItemAmount(itemAmount += 1);
     }
 
+    const user = {
+        accountType: "admin"
+    }
+
     return (
         <Container>
             <h3 className='poppins-medium'>{title}</h3>
@@ -87,10 +92,18 @@ export function Slider({ title, data }) {
                 width < 1024 ?
                     <div ref={sliderRef} className="keen-slider slider">
                         {
-                            data.map(meal => (
-                                <div className="keen-slider__slide slide">
+                            data.map((meal, index) => (
+                                <div
+                                    className="keen-slider__slide slide"
+                                    key={index}
+                                >
                                     <button className='favoriteBtn'>
-                                        <CiHeart />
+                                        {
+                                            variant == "admin" ?
+                                                <PiPencilSimple />
+                                                :
+                                                <CiHeart />
+                                        }
                                     </button>
                                     <img src={meal.image_path} alt="Imagem ilustrativa do prato" />
                                     <p className='title poppins-medium'>
@@ -99,22 +112,27 @@ export function Slider({ title, data }) {
                                     <span className='preco roboto-regular'>
                                         R$ {String(meal.preco.toFixed(2)).replace(".", ",")}
                                     </span>
-                                    <div>
-                                        <button
-                                            onClick={() => decrementItemAmount()}
-                                        >
-                                            <HiMiniMinus />
-                                        </button>
-                                        <span className='roboto-regular'>
-                                            {String(itemAmount).padStart(2, "0")}
-                                        </span>
-                                        <button
-                                            onClick={() => incrementItemAmount()}
-                                        >
-                                            <HiMiniPlus />
-                                        </button>
-                                    </div>
-                                    <Button title={"incluir"} />
+                                    {
+                                        variant !== "admin" &&
+                                        <>
+                                            <div>
+                                                <button
+                                                    onClick={() => decrementItemAmount()}
+                                                >
+                                                    <HiMiniMinus />
+                                                </button>
+                                                <span className='roboto-regular'>
+                                                    {String(itemAmount).padStart(2, "0")}
+                                                </span>
+                                                <button
+                                                    onClick={() => incrementItemAmount()}
+                                                >
+                                                    <HiMiniPlus />
+                                                </button>
+                                            </div>
+                                            <Button title={"incluir"} />
+                                        </>
+                                    }
                                 </div>
                             ))
                         }
@@ -123,10 +141,18 @@ export function Slider({ title, data }) {
                     <div className="navigation-wrapper navigation">
                         <div ref={sliderRef} className="keen-slider slider">
                             {
-                                data.map(meal => (
-                                    <div className="keen-slider__slide slide">
+                                data.map((meal, index) => (
+                                    <div 
+                                        className="keen-slider__slide slide"
+                                        key={index}
+                                    >
                                         <button className='favoriteBtn'>
-                                            <CiHeart />
+                                            {
+                                                variant == "admin" ?
+                                                    <PiPencilSimple />
+                                                    :
+                                                    <CiHeart />
+                                            }
                                         </button>
                                         <img src={meal.image_path} alt="Imagem ilustrativa do prato" />
                                         <p className='title poppins-medium'>
@@ -135,22 +161,27 @@ export function Slider({ title, data }) {
                                         <span className='preco roboto-regular'>
                                             R$ {String(meal.preco.toFixed(2)).replace(".", ",")}
                                         </span>
-                                        <div>
-                                            <button
-                                                onClick={() => decrementItemAmount()}
-                                            >
-                                                <HiMiniMinus />
-                                            </button>
-                                            <span className='roboto-regular'>
-                                                {String(itemAmount).padStart(2, "0")}
-                                            </span>
-                                            <button
-                                                onClick={() => incrementItemAmount()}
-                                            >
-                                                <HiMiniPlus />
-                                            </button>
-                                        </div>
-                                        <Button title={"incluir"} />
+                                        {
+                                            variant !== "admin" &&
+                                            <>
+                                                <div>
+                                                    <button
+                                                        onClick={() => decrementItemAmount()}
+                                                    >
+                                                        <HiMiniMinus />
+                                                    </button>
+                                                    <span className='roboto-regular'>
+                                                        {String(itemAmount).padStart(2, "0")}
+                                                    </span>
+                                                    <button
+                                                        onClick={() => incrementItemAmount()}
+                                                    >
+                                                        <HiMiniPlus />
+                                                    </button>
+                                                </div>
+                                                <Button title={"incluir"} />
+                                            </>
+                                        }
                                     </div>
                                 ))
                             }
