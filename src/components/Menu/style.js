@@ -13,12 +13,20 @@ export const Container = styled.menu`
     padding: 2rem;
     z-index: 3;
 
-    > button {
-        text-align: start;
-        padding: 0 0 1rem;
-        background: transparent;
-        color: ${({theme}) => theme.COLORS.LIGHT.LIGHT100};
-        border: none;
-        border-bottom: 1px solid ${({theme}) => theme.COLORS.DARK.DARK1000};
+    > .buttons {
+        display: flex;
+        flex-direction: column;
+
+        button, a {
+            text-align: start;
+            background: transparent;
+            color: ${({theme}) => theme.COLORS.LIGHT.LIGHT300};
+            font-size: 2.4rem;
+            font-weight: 300;
+            padding: 0 0 1rem;
+            border: none;
+            border-bottom: 1px solid ${({theme}) => theme.COLORS.DARK.DARK1000};
+        }
     }
+    
 `;
