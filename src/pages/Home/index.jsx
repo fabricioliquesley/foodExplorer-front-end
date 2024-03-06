@@ -92,22 +92,39 @@ export function Home() {
         },
     ]
 
+    const user = {
+        accountType: "admin"
+    }
+
     return (
         <Container $statusMenu={statusMenu}>
             <Header
                 menuStatus={statusMenu}
                 orderAmount={5}
                 onClick={() => toggleMenu()}
+                variant={user.accountType}
             />
             <main>
                 {
                     width < 1024 &&
-                    <Menu status={statusMenu} />
+                    <Menu status={statusMenu} variant={user.accountType}/>
                 }
                 <Banner />
-                <Slider title={"Refeições"} data={data} />
-                <Slider title={"Pratos principais"} data={data} />
-                <Slider title={"Bebidas"} data={data} />
+                <Slider 
+                    title={"Refeições"} 
+                    data={data} 
+                    variant={user.accountType}
+                />
+                <Slider 
+                    title={"Pratos principais"} 
+                    data={data}
+                    variant={user.accountType}
+                />
+                <Slider 
+                    title={"Bebidas"} 
+                    data={data}
+                    variant={user.accountType}
+                />
             </main>
             <Footer />
         </Container>
