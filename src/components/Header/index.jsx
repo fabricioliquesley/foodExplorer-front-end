@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 import { useState } from "react";
 
-export function Header({ orderAmount, menuStatus, ...res }) {
+export function Header({ orderAmount, menuStatus, variant, ...res }) {
     const [width, setWidth] = useState(window.document.defaultView.innerWidth);
 
     window.addEventListener("resize", () => {
@@ -25,7 +25,7 @@ export function Header({ orderAmount, menuStatus, ...res }) {
                     }
                 </button>
             }
-            <Logo />
+            <Logo variant={variant} />
             {
                 width >= 1024 &&
                 <Input
@@ -36,29 +36,44 @@ export function Header({ orderAmount, menuStatus, ...res }) {
             }
             {
                 width < 1024 ?
-                    <Link
-                        to={"/orders"}
-                        className="orders"
-                    >
+                    <>
                         {
-                            orderAmount > 0 &&
-                            <div className="ordersNotification">
-                                {orderAmount}
-                            </div>
+                            variant !== "admin" &&
+                            <Link
+                                to={"/orders"}
+                                className="orders"
+                            >
+                                {
+                                    orderAmount > 0 &&
+                                    <div className="ordersNotification">
+                                        {orderAmount}
+                                    </div>
+                                }
+                                <PiReceipt />
+                            </Link>
                         }
-                        <PiReceipt />
-                    </Link>
+                    </>
                     :
                     <>
-                        <Link
-                            to={"/orders"}
-                            className="orders"
-                        >
-                            <PiReceipt />
-                            <p className="poppins-regular">
-                                Pedidos ({orderAmount})
-                            </p>
-                        </Link>
+                        {
+                            variant == "admin" ?
+                                <Link
+                                    to={"/create"}
+                                    className="newMeal"
+                                >
+                                    Novo prato
+                                </Link>
+                                :
+                                <Link
+                                    to={"/orders"}
+                                    className="orders"
+                                >
+                                    <PiReceipt />
+                                    <p className="poppins-regular">
+                                        Pedidos ({orderAmount})
+                                    </p>
+                                </Link>
+                        }
                         <button>
                             <FiLogOut />
                         </button>

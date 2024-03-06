@@ -62,7 +62,7 @@ export const Container = styled.header`
             flex: 1;
         }
 
-        > .orders {
+        > .orders, .newMeal {
             display: flex;
             align-items: center;
             gap: 0.8rem;
