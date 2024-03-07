@@ -24,6 +24,11 @@ export const Container = styled.header`
         color: ${({ theme }) => theme.COLORS.LIGHT.LIGHT100};
     }
 
+    .historyBtn {
+        color: ${({ theme }) => theme.COLORS.LIGHT.LIGHT300};
+        font-size: 1.6rem;
+    }
+
     > div {
         width: fit-content;
 

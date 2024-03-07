@@ -40,7 +40,7 @@ export function Header({ orderAmount, menuStatus, variant, ...res }) {
                         {
                             variant !== "admin" &&
                             <Link
-                                to={"/orders"}
+                                to={"/order"}
                                 className="orders"
                             >
                                 {
@@ -57,12 +57,20 @@ export function Header({ orderAmount, menuStatus, variant, ...res }) {
                     <>
                         {
                             variant == "admin" ?
-                                <Link
-                                    to={"/create"}
-                                    className="newMeal"
-                                >
-                                    Novo prato
-                                </Link>
+                                <>
+                                    <Link 
+                                        to={"/orders/history"}
+                                        className="historyBtn"
+                                    >
+                                        Pedidos
+                                    </Link>
+                                    <Link
+                                        to={"/create"}
+                                        className="newMeal"
+                                    >
+                                        Novo prato
+                                    </Link>
+                                </>
                                 :
                                 <Link
                                     to={"/orders"}
