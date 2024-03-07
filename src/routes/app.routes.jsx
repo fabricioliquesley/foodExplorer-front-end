@@ -5,6 +5,8 @@ import { MealDetails } from "../pages/MealDetails";
 import { CreateMeal } from "../pages/CreateMeal";
 import { EditMeal } from "../pages/EditMeal";
 import { Order } from "../pages/Order";
+import { Favorites } from "../pages/Favorites";
+import { OrdersHistory } from "../pages/OrdersHistory";
 
 export function AppRoutes() {
     return (
@@ -14,6 +16,8 @@ export function AppRoutes() {
             <Route path="/create" element={<CreateMeal />} />
             <Route path="/edit/:id" element={<EditMeal />} />
             <Route path="/order" element={<Order />} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/orders/history" element={<OrdersHistory />} />
         </Routes>
     )
 }
