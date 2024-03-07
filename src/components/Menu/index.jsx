@@ -12,10 +12,19 @@ export function Menu({ status, variant }) {
             />
             <div className="buttons">
                 {
-                    variant == "admin" &&
+                    variant == "admin" ?
                     <Link to={"/create"}>
                         Novo prato
                     </Link>
+                    :
+                    <>
+                        <Link to={"/favorites"}>
+                            Meus favoritos
+                        </Link>
+                        <Link to={"/orders/history"}>
+                            Histórico de pedidos
+                        </Link>
+                    </>
                 }
                 <button>
                     Sair
