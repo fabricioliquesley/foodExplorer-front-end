@@ -69,35 +69,81 @@ export function OrdersHistory() {
         <h2 className="poppins-medium">Pedidos</h2>
         <OrdersContainer>
           {
-            history.map((card, index) => (
-              <div
-                className="orderCard"
-                key={index}
-              >
-                <div>
-                  <p>{card.code}</p>
-                  <StatusOrder $orderstatus={card.status}>
-                    <span>
-                      {card.status}
-                    </span>
-                  </StatusOrder>
-                  <p>
-                    {
-                      card.date[0][2]
-                      + "/" +
-                      card.date[0][1]
-                      + " às " + 
-                      (card.date[1][0] - 3)
-                      + "h" +
-                      card.date[1][1]
-                    }
-                  </p>
-                </div>
-                <p>
-                  {card.details}
-                </p>
-              </div>
-            ))
+            width < 1024 ?
+              <>
+                {
+                  history.map((card, index) => (
+                    <div
+                      className="orderCard"
+                      key={index}
+                    >
+                      <div>
+                        <p>{card.code}</p>
+                        <StatusOrder $orderstatus={card.status}>
+                          <span>
+                            {card.status}
+                          </span>
+                        </StatusOrder>
+                        <p>
+                          {
+                            card.date[0][2]
+                            + "/" +
+                            card.date[0][1]
+                            + " às " +
+                            (card.date[1][0] - 3)
+                            + "h" +
+                            card.date[1][1]
+                          }
+                        </p>
+                      </div>
+                      <p>
+                        {card.details}
+                      </p>
+                    </div>
+                  ))
+                }
+              </>
+              :
+              <table>
+                <thead>
+                  <tr>
+                    <th>Status</th>
+                    <th>Código</th>
+                    <th>Detalhes do pedido</th>
+                    <th>Data e hora</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {
+                  history.map((card, index) => (
+                    <tr
+                      key={index}
+                    >
+                      <StatusOrder $orderstatus={card.status}>
+                        <span>
+                          {card.status}
+                        </span>
+                      </StatusOrder>
+                      <td>{card.code}</td>
+                      <td>
+                        {card.details}
+                      </td>
+                      <td>
+                        {
+                          card.date[0][2]
+                          + "/" +
+                          card.date[0][1]
+                          + " às " +
+                          (card.date[1][0] - 3)
+                          + "h" +
+                          card.date[1][1]
+                        }
+                      </td>
+                    </tr>
+                  ))
+                }
+                </tbody>
+              </table>
           }
         </OrdersContainer>
       </main>

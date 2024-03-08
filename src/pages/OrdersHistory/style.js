@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { DEVICE_BREAKPOINT } from "../../styles/deviceBreakPoint";
 
 export const Container = styled.div`
 	position: relative;
@@ -16,6 +17,13 @@ export const Container = styled.div`
 			font-size: 3.2rem;
 			line-height: 140%;
 			margin: 5.6rem 2rem 1.7rem;
+		}
+
+
+		@media (min-width: ${DEVICE_BREAKPOINT.LG}) {
+			h2 {
+				margin: 5.6rem 12.3rem 1.7rem;
+			}
 		}
 	}
 `;
@@ -44,9 +52,74 @@ export const OrdersContainer = styled.section`
 			margin-top: 1.6rem;
 		}
 	}
+
+	> table {
+		margin: 0 12.3rem 3rem;
+		border: 2px solid ${({ theme }) => theme.COLORS.DARK.DARK1000};
+		border-radius: .8rem;
+		border-spacing: 0;
+
+		tr {
+			th {
+				text-align: start;
+			}
+
+			th, td {
+				color: ${({ theme }) => theme.COLORS.LIGHT.LIGHT300};
+				font-size: 1.4rem;
+				font-weight: 700;
+				line-height: 160%;
+				padding: 2rem 2.4rem;
+				border-bottom: 2px solid ${({ theme }) => theme.COLORS.DARK.DARK1000};
+			}
+
+			th + th, td + td {
+				border-left: 2px solid ${({ theme }) => theme.COLORS.DARK.DARK1000};
+			}
+		}
+
+		tbody {
+			tr {
+				&:last-child {
+					td {
+						border-bottom: 0;
+					}
+				}
+			}
+		}
+
+		.orderCard {
+			display: flex;
+			align-items: center;
+			padding: 0;
+
+			p {
+				padding: 2rem 2.4rem;
+				flex-grow: 1;
+				margin: 0;
+
+				&:nth-child(3) {
+					flex-grow: 0;
+					background: red;
+				}
+			}
+		}
+
+		.orderCard + .orderCard{
+			border-top: 0;
+		}
+
+		.orderCard:last-child {
+			border-radius: 0 0 .8rem .8rem;
+		}
+	}
+
+	@media (min-width: ${DEVICE_BREAKPOINT.LG}) {
+		padding: 0;
+	}
 `;
 
-export const StatusOrder = styled.div`
+export const StatusOrder = styled.td`
 	span {
 		display: flex;
 		align-items: center;
