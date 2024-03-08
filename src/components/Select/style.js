@@ -23,12 +23,27 @@ export const Container = styled.div`
         font-size: 1.4rem;
         padding: 1.6rem;
         border-radius: 0.5rem;
+        cursor: pointer;
 
         svg {
             transform: ${({ $selectStatus }) => $selectStatus == "open" ? "rotate(180deg)" : "rotate(0deg)"};
             transition: .4s;
         }
     }
+
+    .statusOrder {
+		display: flex;
+		align-items: center;
+		gap: .8rem;
+
+		&::before {
+			content: "";
+			width: .8rem;
+			height: .8rem;
+			background: ${({ theme, $orderstatus }) => $orderstatus == "Pendente" ? theme.COLORS.TINTS.TOMATO300 : $orderstatus == "Preparando" ? theme.COLORS.TINTS.CARROT100 : theme.COLORS.TINTS.MINT100};
+			border-radius: 50%;
+		}
+	}
 `;
 
 export const Options = styled.ul`
@@ -42,6 +57,7 @@ export const Options = styled.ul`
     padding: 1.6rem;
     border-radius: 0.5rem;
     list-style: none;
+    cursor: pointer;
 
     @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
         position: absolute;
