@@ -58,8 +58,11 @@ export function Header({ orderAmount, menuStatus, variant, ...res }) {
                         {
                             variant == "admin" ?
                                 <>
-                                    <Link 
-                                        to={"/orders/history"}
+                                    <Link>
+                                        
+                                    </Link>
+                                    <Link
+                                        to={"/orders/control"}
                                         className="historyBtn"
                                     >
                                         Pedidos
@@ -72,15 +75,27 @@ export function Header({ orderAmount, menuStatus, variant, ...res }) {
                                     </Link>
                                 </>
                                 :
-                                <Link
-                                    to={"/orders"}
-                                    className="orders"
-                                >
-                                    <PiReceipt />
-                                    <p className="poppins-regular">
-                                        Pedidos ({orderAmount})
-                                    </p>
-                                </Link>
+                                <>
+                                    <Link
+                                        to={"/favorites"}
+                                    >
+                                        Meus favoritos
+                                    </Link>
+                                    <Link
+                                        to={"/orders/history"}
+                                    >
+                                        Histórico pedidos
+                                    </Link>
+                                    <Link
+                                        to={"/order"}
+                                        className="orders"
+                                    >
+                                        <PiReceipt />
+                                        <p className="poppins-regular">
+                                            Pedidos ({orderAmount})
+                                        </p>
+                                    </Link>
+                                </>
                         }
                         <button>
                             <FiLogOut />
