@@ -83,6 +83,12 @@ export const Container = styled.div`
                 width: 100%;
             }
         }
+
+        @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
+            >.slide .preco {
+                font-size: 2rem;
+            }
+        }
     }
 
     .navigation {

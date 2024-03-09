@@ -2,11 +2,11 @@ import { styled } from "styled-components";
 import { DEVICE_BREAKPOINT } from "../../styles/deviceBreakPoint";
 
 export const Container = styled.div`
+    position: relative;
     display: grid;
     grid-template-rows: max-content 1fr max-content;
     width: 100%;
     height: 100vh;
-    position: relative;
     overflow: hidden;
     
     > main {

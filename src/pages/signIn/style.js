@@ -15,5 +15,13 @@ export const Container = styled.main`
         justify-content: space-between;
         max-width: 80rem;
         margin: 0 auto;
-    }
+
+        > div img {
+            width: 4rem;
+        }
+
+        > div h1 {
+            font-size: 3.2rem;
+        }
+}
 `;

@@ -39,6 +39,4 @@ export const Container = styled.div`
         gap: 0;
         align-items: flex-end;
     }
-
-
 `;

@@ -10,6 +10,7 @@ position: relative;
     overflow: hidden;
 
     > main {
+        display: flex;
         overflow: ${({ $statusMenu }) => $statusMenu == "open" ? "hidden" : "auto"};
     }
     `;
@@ -30,6 +31,7 @@ export const Content = styled.div`
     @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
         flex-direction: row;
         max-width: 100%;
+        gap: 5rem;
     }
 `;
 
@@ -37,7 +39,7 @@ export const Left = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 70%;
 
     > a {
         display: flex;

@@ -23,7 +23,7 @@ export const Container = styled.menu`
             color: ${({theme}) => theme.COLORS.LIGHT.LIGHT300};
             font-size: 2.4rem;
             font-weight: 300;
-            padding: 0 0 1rem;
+            padding: 1rem;
             border: none;
             border-bottom: 1px solid ${({theme}) => theme.COLORS.DARK.DARK1000};
         }

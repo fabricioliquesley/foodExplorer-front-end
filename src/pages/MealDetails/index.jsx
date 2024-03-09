@@ -55,7 +55,7 @@ export function MealDetails() {
     }
 
     const user = {
-        accountType: "admin"
+        accountType: "adminc"
     }
 
     return (

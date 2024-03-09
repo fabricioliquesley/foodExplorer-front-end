@@ -8,6 +8,7 @@ export const Container = styled.footer`
     width: 100%;
     background-color: ${({theme}) => theme.COLORS.DARK.DARK600};
     padding: 3.2rem;
+    z-index: 9;
 
     > p {
         font-size: 1rem;
