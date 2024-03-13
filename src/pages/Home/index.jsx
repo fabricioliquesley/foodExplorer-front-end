@@ -5,7 +5,7 @@ import { Menu } from "../../components/Menu";
 import { Banner } from "../../components/Banner";
 import { Slider } from "../../components/Slider";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function Home() {
     const [statusMenu, setStatusMenu] = useState("close");
@@ -16,12 +16,18 @@ export function Home() {
         setWidth(window.document.defaultView.innerWidth);
     })
 
+    const [itemsQuantity, setItemsQuantity] = useState(0)
+
     function toggleMenu() {
         if (statusMenu == "open") {
             return setStatusMenu("close");
         }
 
         return setStatusMenu("open");
+    }
+
+    function fetchOrderItems() {
+        setItemsQuantity(JSON.parse(localStorage.getItem("@foodExplorer:orderItems"))?.length || 0)
     }
 
     const data = [
@@ -93,35 +99,41 @@ export function Home() {
     ]
 
     const user = {
-        accountType: "admin"
+        accountType: "common"
     }
+
+    useEffect(() => {
+        fetchOrderItems();
+
+        setInterval(fetchOrderItems, 5000);
+    }, [])
 
     return (
         <Container $statusMenu={statusMenu}>
             <Header
                 menuStatus={statusMenu}
-                orderAmount={5}
+                orderAmount={itemsQuantity}
                 onClick={() => toggleMenu()}
                 variant={user.accountType}
             />
             <main>
                 {
                     width < 1024 &&
-                    <Menu status={statusMenu} variant={user.accountType}/>
+                    <Menu status={statusMenu} variant={user.accountType} />
                 }
                 <Banner />
-                <Slider 
-                    title={"Refeições"} 
-                    data={data} 
-                    variant={user.accountType}
-                />
-                <Slider 
-                    title={"Pratos principais"} 
+                <Slider
+                    title={"Refeições"}
                     data={data}
                     variant={user.accountType}
                 />
-                <Slider 
-                    title={"Bebidas"} 
+                <Slider
+                    title={"Pratos principais"}
+                    data={data}
+                    variant={user.accountType}
+                />
+                <Slider
+                    title={"Bebidas"}
                     data={data}
                     variant={user.accountType}
                 />
