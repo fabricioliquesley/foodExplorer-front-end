@@ -41,7 +41,7 @@ export function Home() {
                 "molho de tomate",
                 "cogumelos champignon"
             ],
-            preco: 19.95,
+            price: 19.95,
             description: "Um delicioso prato feito com ingredientes de extrema qualidade, serve 1 pessoa. Acompanha arroz e batata palha."
         },
         {
@@ -54,7 +54,7 @@ export function Home() {
                 "ovos",
                 "queijo parmesão"
             ],
-            preco: 17.50,
+            price: 17.50,
             description: "Um prato clássico italiano, preparado com bacon crocante, ovos cremosos e queijo parmesão. Serve 1 pessoa."
         },
         {
@@ -67,7 +67,7 @@ export function Home() {
                 "creme de leite",
                 "queijo parmesão"
             ],
-            preco: 23.99,
+            price: 23.99,
             description: "Risoto cremoso preparado com camarões frescos, servido com uma generosa porção de queijo parmesão ralado. Serve 1 pessoa."
         },
         {
@@ -80,7 +80,7 @@ export function Home() {
                 "molho de tomate",
                 "cogumelos champignon"
             ],
-            preco: 19.95,
+            price: 19.95,
             description: "Um delicioso prato feito com ingredientes de extrema qualidade, serve 1 pessoa. Acompanha arroz e batata palha."
         },
         {
@@ -93,7 +93,7 @@ export function Home() {
                 "molho de tomate",
                 "cogumelos champignon"
             ],
-            preco: 19.95,
+            price: 19.95,
             description: "Um delicioso prato feito com ingredientes de extrema qualidade, serve 1 pessoa. Acompanha arroz e batata palha."
         },
     ]

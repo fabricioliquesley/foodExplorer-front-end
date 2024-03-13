@@ -56,7 +56,7 @@ export const Container = styled.div`
                 }
             }
 
-            .preco {
+            .price {
                 color: ${({ theme }) => theme.COLORS.TINTS.CAKE200};
                 font-size: 1.6rem;
             }

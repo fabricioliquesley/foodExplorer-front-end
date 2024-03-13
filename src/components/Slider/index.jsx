@@ -1,6 +1,5 @@
 import { Container } from './style';
 import { Button } from "../Button";
-import { HiMiniMinus, HiMiniPlus } from "react-icons/hi2";
 import { CiHeart } from "react-icons/ci";
 import { PiPencilSimple } from "react-icons/pi";
 
@@ -93,6 +92,7 @@ export function Slider({ title, data, variant }) {
     const mealCard = target.parentNode.parentNode;
 
     const mealName = mealCard.querySelector(".title").innerText;
+    const [, mealPrice] = mealCard.querySelector(".price").innerText.split(" ");
     const mealAmount = mealCard.querySelector(".amount");
 
     const [thereIsThisItemInTheOrder, index] = fetchForOrderItem(mealName);
@@ -102,6 +102,7 @@ export function Slider({ title, data, variant }) {
 
       setOrderItems(prev => [...prev, {
         name: mealName,
+        price: Number(mealPrice.replace(",", ".")),
         amount: Number(mealAmount.textContent),
       }] )
 
@@ -168,8 +169,8 @@ export function Slider({ title, data, variant }) {
                   <p className='title poppins-medium'>
                     {meal.name}
                   </p>
-                  <span className='preco roboto-regular'>
-                    R$ {String(meal.preco.toFixed(2)).replace(".", ",")}
+                  <span className='price roboto-regular'>
+                    R$ {String(meal.price.toFixed(2)).replace(".", ",")}
                   </span>
                   {
                     variant !== "admin" &&
