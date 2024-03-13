@@ -92,6 +92,7 @@ export function Slider({ title, data, variant }) {
     const mealCard = target.parentNode.parentNode;
 
     const mealName = mealCard.querySelector(".title").innerText;
+    const mealImgPath = mealCard.querySelector("img").src;
     const [, mealPrice] = mealCard.querySelector(".price").innerText.split(" ");
     const mealAmount = mealCard.querySelector(".amount");
 
@@ -102,6 +103,7 @@ export function Slider({ title, data, variant }) {
 
       setOrderItems(prev => [...prev, {
         name: mealName,
+        img: mealImgPath,
         price: Number(mealPrice.replace(",", ".")),
         amount: Number(mealAmount.textContent),
       }] )
@@ -218,8 +220,8 @@ export function Slider({ title, data, variant }) {
                     <p className='title poppins-medium'>
                       {meal.name}
                     </p>
-                    <span className='preco roboto-regular'>
-                      R$ {String(meal.preco.toFixed(2)).replace(".", ",")}
+                    <span className='price roboto-regular'>
+                      R$ {String(meal.price.toFixed(2)).replace(".", ",")}
                     </span>
                     {
                       variant !== "admin" &&
@@ -239,7 +241,7 @@ export function Slider({ title, data, variant }) {
                             +
                           </button>
                         </div>
-                        <Button title={"incluir"} />
+                        <Button title={"incluir"} onClick={addItemToOrder}/>
                       </>
                     }
                   </div>

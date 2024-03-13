@@ -28,39 +28,15 @@ export function Order() {
     return setStatusMenu("open");
   }
 
-  const orderMeals = [
-    {
-      img: "/src/assets/mail_example.png",
-      name: "Salada Radish",
-      preco: 19.4
-    },
-    {
-      img: "/src/assets/mail_example.png",
-      name: "Salada Radish",
-      preco: 19
-    },
-    {
-      img: "/src/assets/mail_example.png",
-      name: "Salada Radish",
-      preco: 19.45
-    },
-    {
-      img: "/src/assets/mail_example.png",
-      name: "Salada Radish",
-      preco: 19.45
-    },
-    {
-      img: "/src/assets/mail_example.png",
-      name: "Salada Radish",
-      preco: 19.45
-    },
-  ]
+  const orderMeals = JSON.parse(localStorage.getItem("@foodExplorer:orderItems")) ?? [];
+
+  // img: "/src/assets/mail_example.png",
 
   useEffect(() => {
     let currentValue = total;
 
     orderMeals.map(orderMeal => {
-      currentValue += orderMeal.preco;
+      currentValue += orderMeal.price * orderMeal.amount;
 
       setTotal(currentValue);
     })
@@ -68,7 +44,11 @@ export function Order() {
 
   return (
     <Container $statusMenu={statusMenu}>
-      <Header onClick={() => toggleMenu()} menuStatus={statusMenu} orderAmount={5} />
+      <Header
+        onClick={() => toggleMenu()}
+        menuStatus={statusMenu}
+        orderAmount={orderMeals.length}
+      />
       <main>
         {
           width < 1024 &&
@@ -93,8 +73,9 @@ export function Order() {
                       <div>
                         <p>{orderMeal.name}</p>
                         <span>
+                          {orderMeal.amount} x
                           R$ {
-                            String(orderMeal.preco.toFixed(2))
+                            String(orderMeal.price.toFixed(2))
                               .replace(".", ",")
                           }
                         </span>
