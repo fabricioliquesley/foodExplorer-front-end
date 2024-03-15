@@ -5,7 +5,26 @@ import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { Link } from "react-router-dom";
 
+import { useState } from "react";
+
+import { useAuth } from "../../hook/auth";
+
 export function SignIn() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const { signIn } = useAuth();
+
+    async function executeSignIn(e) {
+        e.preventDefault();
+
+        if (!email || !password) {
+            return alert("Preencha todos os campos");
+        }
+
+        signIn({email, password});
+    }
+
     return (
         <Container>
             <Logo />
@@ -19,6 +38,7 @@ export function SignIn() {
                         id="email"
                         type="email"
                         placeholder="Exemplo: exemplo@exemplo.com.br"
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </fieldset>
                 <fieldset>
@@ -27,9 +47,10 @@ export function SignIn() {
                         id="password"
                         type="password"
                         placeholder="No mínimo 6 caracteres"
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </fieldset>
-                <Button title={"Entrar"} />
+                <Button title={"Entrar"} onClick={(e) => executeSignIn(e)} />
                 <Link
                     className="poppins-medium"
                     to={"/register"}
