@@ -7,6 +7,8 @@ import { Slider } from "../../components/Slider";
 
 import { useEffect, useState } from "react";
 
+import { api } from "../../services/api";
+
 export function Home() {
     const [statusMenu, setStatusMenu] = useState("close");
 
@@ -30,73 +32,39 @@ export function Home() {
         setItemsQuantity(JSON.parse(localStorage.getItem("@foodExplorer:orderItems"))?.length || 0)
     }
 
-    const data = [
-        {
-            image_path: "/src/assets/mail_example.png",
-            name: "Strogonoff de Frango",
-            category: "Prato Principal",
-            ingredients: [
-                "frango",
-                "creme de leite",
-                "molho de tomate",
-                "cogumelos champignon"
-            ],
-            price: 19.95,
-            description: "Um delicioso prato feito com ingredientes de extrema qualidade, serve 1 pessoa. Acompanha arroz e batata palha."
-        },
-        {
-            image_path: "/src/assets/mail_example.png",
-            name: "Macarrão à Carbonara",
-            category: "Prato Principal",
-            ingredients: [
-                "macarrão",
-                "bacon",
-                "ovos",
-                "queijo parmesão"
-            ],
-            price: 17.50,
-            description: "Um prato clássico italiano, preparado com bacon crocante, ovos cremosos e queijo parmesão. Serve 1 pessoa."
-        },
-        {
-            image_path: "/src/assets/mail_example.png",
-            name: "Risoto de Camarão",
-            category: "Prato Principal",
-            ingredients: [
-                "arroz arbóreo",
-                "camarão",
-                "creme de leite",
-                "queijo parmesão"
-            ],
-            price: 23.99,
-            description: "Risoto cremoso preparado com camarões frescos, servido com uma generosa porção de queijo parmesão ralado. Serve 1 pessoa."
-        },
-        {
-            image_path: "/src/assets/mail_example.png",
-            name: "Strogonoff de Carne",
-            category: "Prato Principal",
-            ingredients: [
-                "carne",
-                "creme de leite",
-                "molho de tomate",
-                "cogumelos champignon"
-            ],
-            price: 19.95,
-            description: "Um delicioso prato feito com ingredientes de extrema qualidade, serve 1 pessoa. Acompanha arroz e batata palha."
-        },
-        {
-            image_path: "/src/assets/mail_example.png",
-            name: "Strogonoff de Camarão",
-            category: "Prato Principal",
-            ingredients: [
-                "carne",
-                "creme de leite",
-                "molho de tomate",
-                "cogumelos champignon"
-            ],
-            price: 19.95,
-            description: "Um delicioso prato feito com ingredientes de extrema qualidade, serve 1 pessoa. Acompanha arroz e batata palha."
-        },
-    ]
+    const [mealData, setMealData] = useState([]);
+
+    async function fetchMealData() {
+        const response = await api.get("/meals");
+
+        response.data.forEach(meal => {
+            const img_url = `${api.defaults.baseURL}/files/${meal.image_path}`;
+
+            meal.image_path = img_url;
+        })
+
+        setMealData(response.data);
+    }
+
+    const [mainCourse, setMainCourse] = useState([]);
+    const [dessert, setDessert] = useState([]);
+    const [drink, setDrink] = useState([]);
+
+    function separateTheMealsCategories() {
+        mealData.map(meal => {
+            if (meal.category == "Prato Principal") {
+                setMainCourse(prev => [...prev, meal])
+            }
+        
+            if (meal.category == "Bebida") {
+                setDrink(prev => [...prev, meal])
+            }
+        
+            if (meal.category == "Sobremesa") {
+                setDessert(prev => [...prev, meal])
+            }
+        })
+    }
 
     const user = {
         accountType: "common"
@@ -104,9 +72,14 @@ export function Home() {
 
     useEffect(() => {
         fetchOrderItems();
+        fetchMealData();
 
         setInterval(fetchOrderItems, 5000);
     }, [])
+
+    useEffect(() => {
+        separateTheMealsCategories();
+    }, [mealData])
 
     return (
         <Container $statusMenu={statusMenu}>
@@ -122,21 +95,28 @@ export function Home() {
                     <Menu status={statusMenu} variant={user.accountType} />
                 }
                 <Banner />
-                <Slider
-                    title={"Refeições"}
-                    data={data}
-                    variant={user.accountType}
-                />
-                <Slider
-                    title={"Pratos principais"}
-                    data={data}
-                    variant={user.accountType}
-                />
-                <Slider
-                    title={"Bebidas"}
-                    data={data}
-                    variant={user.accountType}
-                />
+                {
+                    mealData.length > 0 ?
+                        <>
+                            <Slider
+                                title={"Pratos principais"}
+                                data={mainCourse}
+                                variant={user.accountType}
+                            />
+                            <Slider
+                                title={"Sobremesas"}
+                                data={dessert}
+                                variant={user.accountType}
+                            />
+                            <Slider
+                                title={"Bebidas"}
+                                data={drink}
+                                variant={user.accountType}
+                            />
+                        </>
+                        :
+                        <h1>Não há nada</h1>
+                }
             </main>
             <Footer />
         </Container>
