@@ -1,8 +1,18 @@
 import { Container } from "./style";
 import { Input } from "../Input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import { useAuth } from "../../hook/auth";
 
 export function Menu({ status, variant }) {
+    const { signOut } = useAuth();
+    const navigate = useNavigate();
+
+    function executeSignOut() {
+        signOut();
+        navigate("/")
+    }
+
     return (
         <Container $status={status}>
             <Input
@@ -31,7 +41,7 @@ export function Menu({ status, variant }) {
                             </Link>
                         </>
                 }
-                <button>
+                <button onClick={executeSignOut}>
                     Sair
                 </button>
             </div>
