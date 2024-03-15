@@ -4,9 +4,7 @@ import { IoIosArrowDown } from "react-icons/io";
 
 export function Select({ label, className, variant }) {
     const options = [
-        "Refeição",
         "Prato principal",
-        "Saladas",
         "Bebidas",
         "Sobremesa"
     ]

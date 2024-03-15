@@ -43,7 +43,10 @@ export const Container = styled.div`
             }
 
             img {
-                width: 8.8rem;
+                width: 10rem;
+                height: 10rem;
+                border-radius: 50%;
+                object-fit: cover;
             }
 
             .title {

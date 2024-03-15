@@ -30,8 +30,6 @@ export function Order() {
 
   const orderMeals = JSON.parse(localStorage.getItem("@foodExplorer:orderItems")) ?? [];
 
-  // img: "/src/assets/mail_example.png",
-
   useEffect(() => {
     let currentValue = total;
 

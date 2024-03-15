@@ -37,7 +37,10 @@ export const Content = styled.div`
             gap: 1.3rem;
 
             img {
-                width: 8rem;
+                width: 6rem;
+                height: 6rem;
+                border-radius: 50%;
+                object-fit: cover;
             }
 
             span {
