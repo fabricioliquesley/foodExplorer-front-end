@@ -40,6 +40,7 @@ export const Left = styled.div`
     flex-direction: column;
     align-items: center;
     width: 70%;
+    height: fit-content;
 
     > a {
         display: flex;
@@ -51,8 +52,16 @@ export const Left = styled.div`
 
     > img {
         width: 100%;
+        height: 26rem;
         max-width: 26rem;
+        border-radius: 50%;
         margin: 1.6rem 0;
+        object-fit: cover;
+
+        @media (max-width: ${DEVICE_BREAKPOINT.XS}) {
+            max-width: 20rem;
+            height: 20rem;
+        } 
 
         @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
             max-width: 39rem;
