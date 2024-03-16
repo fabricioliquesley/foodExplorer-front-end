@@ -6,6 +6,7 @@ import { PiPencilSimple } from "react-icons/pi";
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 export function Slider({ title, data, variant }) {
@@ -106,7 +107,7 @@ export function Slider({ title, data, variant }) {
         img: mealImgPath,
         price: Number(mealPrice.replace(",", ".")),
         amount: Number(mealAmount.textContent),
-      }] )
+      }])
 
       return;
     }
@@ -132,7 +133,7 @@ export function Slider({ title, data, variant }) {
     if (orderItems[index].amount > 0) {
       mealAmount.textContent--;
       orderItems[index].amount = Number(mealAmount.textContent);
-  
+
       if (orderItems[index].amount == 0) {
         setOrderItems(orderItems.filter(orderItem => orderItem.name != mealName));
       }
@@ -141,6 +142,12 @@ export function Slider({ title, data, variant }) {
 
   function addItemToOrder() {
     return localStorage.setItem("@foodExplorer:orderItems", JSON.stringify(orderItems));
+  }
+
+  const navigate = useNavigate();
+
+  function handleMealDetail(id) {
+    return navigate(`/meal/${id}`);
   }
 
   const user = {
@@ -158,6 +165,7 @@ export function Slider({ title, data, variant }) {
                 <div
                   className="keen-slider__slide slide"
                   key={index}
+                  onClick={() => handleMealDetail(meal.id)}
                 >
                   <button className='favoriteBtn'>
                     {
@@ -177,7 +185,10 @@ export function Slider({ title, data, variant }) {
                   {
                     variant !== "admin" &&
                     <>
-                      <div>
+                      <div
+                        className='controls'
+                        onClick={e => e.stopPropagation()}
+                      >
                         <button
                           onClick={(e) => decreaseItemQuantity(e.target)}
                         >
@@ -192,7 +203,13 @@ export function Slider({ title, data, variant }) {
                           +
                         </button>
                       </div>
-                      <Button title={"incluir"} onClick={addItemToOrder}/>
+                      <Button 
+                        title={"incluir"} 
+                        onClick={ e => {
+                          addItemToOrder()
+                          e.stopPropagation()
+                        }} 
+                      />
                     </>
                   }
                 </div>
@@ -207,6 +224,7 @@ export function Slider({ title, data, variant }) {
                   <div
                     className="keen-slider__slide slide"
                     key={index}
+                    onClick={() => handleMealDetail(meal.id)}
                   >
                     <button className='favoriteBtn'>
                       {
@@ -226,7 +244,10 @@ export function Slider({ title, data, variant }) {
                     {
                       variant !== "admin" &&
                       <>
-                        <div>
+                        <div 
+                          className='controls'
+                          onClick={e => e.stopPropagation()}
+                        >
                           <button
                             onClick={(e) => decreaseItemQuantity(e.target)}
                           >
@@ -241,7 +262,12 @@ export function Slider({ title, data, variant }) {
                             +
                           </button>
                         </div>
-                        <Button title={"incluir"} onClick={addItemToOrder}/>
+                        <Button 
+                          title={"incluir"} 
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            addItemToOrder()
+                          }} />
                       </>
                     }
                   </div>
