@@ -32,7 +32,9 @@ export function Home() {
         setItemsQuantity(JSON.parse(localStorage.getItem("@foodExplorer:orderItems"))?.length || 0)
     }
 
-    const [mealData, setMealData] = useState([]);
+    const [mainCourse, setMainCourse] = useState([]);
+    const [dessert, setDessert] = useState([]);
+    const [drink, setDrink] = useState([]);
 
     async function fetchMealData() {
         const response = await api.get("/meals");
@@ -43,23 +45,15 @@ export function Home() {
             meal.image_path = img_url;
         })
 
-        setMealData(response.data);
-    }
-
-    const [mainCourse, setMainCourse] = useState([]);
-    const [dessert, setDessert] = useState([]);
-    const [drink, setDrink] = useState([]);
-
-    function separateTheMealsCategories() {
-        mealData.map(meal => {
+        response.data.forEach(meal => {
             if (meal.category == "Prato Principal") {
                 setMainCourse(prev => [...prev, meal])
             }
-        
+
             if (meal.category == "Bebida") {
                 setDrink(prev => [...prev, meal])
             }
-        
+
             if (meal.category == "Sobremesa") {
                 setDessert(prev => [...prev, meal])
             }
@@ -77,10 +71,6 @@ export function Home() {
         setInterval(fetchOrderItems, 5000);
     }, [])
 
-    useEffect(() => {
-        separateTheMealsCategories();
-    }, [mealData])
-
     return (
         <Container $statusMenu={statusMenu}>
             <Header
@@ -96,27 +86,29 @@ export function Home() {
                 }
                 <Banner />
                 {
-                    mealData.length > 0 ?
-                        <>
-                            <Slider
-                                title={"Pratos principais"}
-                                data={mainCourse}
-                                variant={user.accountType}
-                            />
-                            <Slider
-                                title={"Sobremesas"}
-                                data={dessert}
-                                variant={user.accountType}
-                            />
-                            <Slider
-                                title={"Bebidas"}
-                                data={drink}
-                                variant={user.accountType}
-                            />
-                        </>
-                        :
-                        <h1>Não há nada</h1>
+                    mainCourse.length > 0 &&
+                    <Slider
+                        title={"Pratos principais"}
+                        data={mainCourse}
+                        variant={user.accountType}
+                    />
                 }
+                {
+                    dessert.length > 0 &&
+                    <Slider
+                        title={"Sobremesas"}
+                        data={dessert}
+                        variant={user.accountType}
+                    />
+                }
+                {
+                    drink.length > 0 &&
+                    <Slider
+                        title={"Bebidas"}
+                        data={drink}
+                        variant={user.accountType}
+                    />
+                }    
             </main>
             <Footer />
         </Container>
