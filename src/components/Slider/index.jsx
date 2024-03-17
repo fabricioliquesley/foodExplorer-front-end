@@ -7,10 +7,11 @@ import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+import { api } from "../../services/api";
 
 export function Slider({ title, data, variant }) {
-  // Mudanças
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
 
@@ -150,9 +151,64 @@ export function Slider({ title, data, variant }) {
     return navigate(`/meal/${id}`);
   }
 
+  async function favoriteMeal(target, meal_id) {
+    const mealCard = target.parentNode.parentNode;
+    const mealImg = mealCard.querySelector("img").src.split("/");
+    const mealTitle = mealCard.querySelector(".title").textContent;
+    const svg = mealCard.querySelector("svg");
+
+    const { data } = await api.get("/favorites");
+
+    let thisFavoriteExist = [];
+
+    data.map(meal => {
+      if (meal.meal_name == mealTitle) {
+        thisFavoriteExist = [true, meal.id];
+      } else {
+        thisFavoriteExist = [false, null];
+      }
+    })
+
+    svg.classList.toggle("favorite");
+
+    if (thisFavoriteExist[0]) {
+      return await api.delete(`/favorites/${thisFavoriteExist[1]}`);
+    }
+
+    await api.post("/favorites", {
+      meal_name: mealTitle,
+      image_path: mealImg[mealImg.length - 1],
+      meal_id
+    })
+  }
+
+  const [favorites, setFavorites] = useState([]);
+
+  async function fetchFavorites() {
+    const { data } = await api.get("/favorites");
+
+    return setFavorites(data);
+  }
+
+  function thisIsAFavorite(name) {
+    let result = false;
+
+    favorites.map(meal => {
+      if (meal.meal_name == name) {
+        result = true;
+      }
+    })
+
+    return result;
+  }
+
   const user = {
     accountType: "admin"
   }
+
+  useEffect(() => {
+    fetchFavorites();
+  }, [])
 
   return (
     <Container>
@@ -167,14 +223,24 @@ export function Slider({ title, data, variant }) {
                   key={index}
                   onClick={() => handleMealDetail(meal.id)}
                 >
-                  <button className='favoriteBtn'>
-                    {
-                      variant == "admin" ?
+                  {
+                    variant == "admin" ?
+                      <button
+                        className='favoriteBtn'
+                      >
                         <PiPencilSimple />
-                        :
-                        <CiHeart />
-                    }
-                  </button>
+                      </button>
+                      :
+                      <button
+                        className='favoriteBtn'
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          favoriteMeal(e.target, meal.id);
+                        }}
+                      >
+                        <CiHeart className={thisIsAFavorite(meal.name) ? "favorite" : ""} />
+                      </button>
+                  }
                   <img src={meal.image_path} alt="Imagem ilustrativa do prato" />
                   <p className='title poppins-medium'>
                     {meal.name}
@@ -203,12 +269,12 @@ export function Slider({ title, data, variant }) {
                           +
                         </button>
                       </div>
-                      <Button 
-                        title={"incluir"} 
-                        onClick={ e => {
+                      <Button
+                        title={"incluir"}
+                        onClick={e => {
                           addItemToOrder()
                           e.stopPropagation()
-                        }} 
+                        }}
                       />
                     </>
                   }
@@ -226,14 +292,22 @@ export function Slider({ title, data, variant }) {
                     key={index}
                     onClick={() => handleMealDetail(meal.id)}
                   >
-                    <button className='favoriteBtn'>
-                      {
-                        variant == "admin" ?
+                    {
+                      variant == "admin" ?
+                        <button className='favoriteBtn'>
                           <PiPencilSimple />
-                          :
-                          <CiHeart />
-                      }
-                    </button>
+                        </button>
+                        :
+                        <button
+                          className='favoriteBtn'
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            favoriteMeal(e.target, meal.id);
+                          }}
+                        >
+                          <CiHeart className={thisIsAFavorite(meal.name) ? "favorite" : ""}/>
+                        </button>
+                    }
                     <img src={meal.image_path} alt="Imagem ilustrativa do prato" />
                     <p className='title poppins-medium'>
                       {meal.name}
@@ -244,7 +318,7 @@ export function Slider({ title, data, variant }) {
                     {
                       variant !== "admin" &&
                       <>
-                        <div 
+                        <div
                           className='controls'
                           onClick={e => e.stopPropagation()}
                         >
@@ -262,8 +336,8 @@ export function Slider({ title, data, variant }) {
                             +
                           </button>
                         </div>
-                        <Button 
-                          title={"incluir"} 
+                        <Button
+                          title={"incluir"}
                           onClick={(e) => {
                             e.stopPropagation()
                             addItemToOrder()

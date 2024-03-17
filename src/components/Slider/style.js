@@ -40,6 +40,10 @@ export const Container = styled.div`
                 background: transparent;
                 border: none;
                 font-size: 2.5rem;
+
+                > svg.favorite {
+                    color: #f11b91;
+                }
             }
 
             img {
