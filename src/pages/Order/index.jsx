@@ -9,11 +9,8 @@ import { useState, useEffect } from "react";
 
 export function Order() {
   const [statusMenu, setStatusMenu] = useState("close");
-
   const [width, setWidth] = useState(window.document.defaultView.innerWidth);
-
   const [step, setStep] = useState(1);
-
   let [total, setTotal] = useState(0);
 
   window.addEventListener("resize", () => {
@@ -26,6 +23,27 @@ export function Order() {
     }
 
     return setStatusMenu("open");
+  }
+
+  const [orderDetails, setOrderDetails] = useState();
+
+  function finalizePayment(target) {
+    const cards = target.parentNode;
+    const orderItems = cards.querySelectorAll(".mealCard");
+
+    let orderDetails = [];
+
+    orderItems.forEach((orderItem) => {
+      const title = orderItem.querySelector(".title").textContent;
+      const detail = orderItem.querySelector(".details").textContent;
+
+      orderDetails.push({
+        amount: String(detail.split("x")[0]).trim(),
+        name: title
+      })
+    })
+
+    setOrderDetails(orderDetails);
   }
 
   const orderMeals = JSON.parse(localStorage.getItem("@foodExplorer:orderItems")) ?? [];
@@ -63,14 +81,17 @@ export function Order() {
               <div className="cards">
                 {
                   orderMeals.map((orderMeal, index) => (
-                    <div key={index} className="mealCard">
+                    <div
+                      key={index}
+                      className="mealCard"
+                    >
                       <img
                         src={orderMeal.img}
                         alt="Imagem ilustrativa do prato"
                       />
                       <div>
-                        <p>{orderMeal.name}</p>
-                        <span>
+                        <p className="title">{orderMeal.name}</p>
+                        <span className="details">
                           {orderMeal.amount} x
                           R$ {
                             String(orderMeal.price.toFixed(2))
@@ -91,13 +112,15 @@ export function Order() {
                   width < 1024 &&
                   <Button
                     title={"Avançar"}
-                    onClick={() => setStep(2)}
+                    onClick={(e) => {
+                      finalizePayment(e.target);
+                      setStep(2);
+                    }}
                   />
                 }
-
               </div>
               :
-              <PaymentMethod />
+              <PaymentMethod orderDetails={orderDetails}/>
           }
           {
             width >= 1024 &&
