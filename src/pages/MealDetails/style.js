@@ -64,7 +64,8 @@ export const Left = styled.div`
         } 
 
         @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
-            max-width: 39rem;
+            max-width: 30rem;
+            height: 30rem;
         }
     }
 `;
