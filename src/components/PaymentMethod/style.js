@@ -20,6 +20,7 @@ export const Container = styled.div`
                 gap: 0.8rem;
                 width: 100%;
                 padding: 2.4rem 3.6rem;
+                cursor: pointer;
             }
 
             .pix {
