@@ -3,7 +3,8 @@ import { Header } from "../../components/Header";
 import { Footer } from "../../components/Footer";
 import { Menu } from "../../components/Menu";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { api } from "../../services/api";
 
 export function OrdersHistory() {
   const [statusMenu, setStatusMenu] = useState("close");
@@ -13,6 +14,8 @@ export function OrdersHistory() {
   window.addEventListener("resize", () => {
     setWidth(window.document.defaultView.innerWidth);
   })
+
+  const orderItem = JSON.parse(localStorage.getItem("@foodExplorer:orderItems")) || 0;
 
   function toggleMenu() {
     if (statusMenu == "open") {
@@ -26,39 +29,30 @@ export function OrdersHistory() {
     accountType: "common"
   }
 
-  const history = [
-    {
-      code: "000004",
-      status: "Pendente",
-      date: "2024-02-22 22:04:48",
-      details: "2 x strogonoff de frango, 1 x risoto de camarão, 4 x macarrão à carbonara"
-    },
-    {
-      code: "000004",
-      status: "Preparando",
-      date: "2024-01-22 22:04:48",
-      details: "2 x strogonoff de frango, 1 x risoto de camarão, 4 x macarrão à carbonara"
-    },
-    {
-      code: "000004",
-      status: "Entregue",
-      date: "2024-02-25 19:04:49",
-      details: "2 x strogonoff de frango, 1 x risoto de camarão, 4 x macarrão à carbonara"
-    },
-  ]
+  const [history, setHistory] = useState([]);
 
-  history.map((order) => {
-    order.date = order.date.split(" ");
-    order.date[0] = order.date[0].split("-");
-    order.date[1] = order.date[1].split(":");
-  })
+  async function fetchOrderHistory() {
+    const { data } = await api.get("/orders");
+
+    data.map((order) => {
+      order.created_at = order.created_at.split(" ");
+      order.created_at[0] = order.created_at[0].split("-");
+      order.created_at[1] = order.created_at[1].split(":");
+    })
+
+    setHistory(data);
+  }
+
+  useEffect(() => {
+    fetchOrderHistory()
+  }, [])
 
   return (
     <Container>
       <Header
         menuStatus={statusMenu}
         variant={user.accountType}
-        orderAmount={5}
+        orderAmount={orderItem.length}
         onClick={toggleMenu}
       />
       <main>
@@ -86,13 +80,13 @@ export function OrdersHistory() {
                         </StatusOrder>
                         <p>
                           {
-                            card.date[0][2]
+                            card.created_at[0][2]
                             + "/" +
-                            card.date[0][1]
+                            card.created_at[0][1]
                             + " às " +
-                            (card.date[1][0] - 3)
+                            (card.created_at[1][0] - 3)
                             + "h" +
-                            card.date[1][1]
+                            card.created_at[1][1]
                           }
                         </p>
                       </div>
@@ -114,34 +108,34 @@ export function OrdersHistory() {
                   </tr>
                 </thead>
                 <tbody>
-                {
-                  history.map((card, index) => (
-                    <tr
-                      key={index}
-                    >
-                      <StatusOrder $orderstatus={card.status}>
-                        <span>
-                          {card.status}
-                        </span>
-                      </StatusOrder>
-                      <td>{card.code}</td>
-                      <td>
-                        {card.details}
-                      </td>
-                      <td>
-                        {
-                          card.date[0][2]
-                          + "/" +
-                          card.date[0][1]
-                          + " às " +
-                          (card.date[1][0] - 3)
-                          + "h" +
-                          card.date[1][1]
-                        }
-                      </td>
-                    </tr>
-                  ))
-                }
+                  {
+                    history.map((card, index) => (
+                      <tr
+                        key={index}
+                      >
+                        <StatusOrder $orderstatus={card.status}>
+                          <span>
+                            {card.status}
+                          </span>
+                        </StatusOrder>
+                        <td>{card.code}</td>
+                        <td>
+                          {card.details}
+                        </td>
+                        <td>
+                          {
+                            card.date[0][2]
+                            + "/" +
+                            card.date[0][1]
+                            + " às " +
+                            (card.date[1][0] - 3)
+                            + "h" +
+                            card.date[1][1]
+                          }
+                        </td>
+                      </tr>
+                    ))
+                  }
                 </tbody>
               </table>
           }
