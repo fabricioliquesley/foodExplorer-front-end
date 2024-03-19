@@ -124,13 +124,13 @@ export function OrdersHistory() {
                         </td>
                         <td>
                           {
-                            card.date[0][2]
+                            card.created_at[0][2]
                             + "/" +
-                            card.date[0][1]
+                            card.created_at[0][1]
                             + " às " +
-                            (card.date[1][0] - 3)
+                            (card.created_at[1][0] - 3)
                             + "h" +
-                            card.date[1][1]
+                            card.created_at[1][1]
                           }
                         </td>
                       </tr>

@@ -27,8 +27,7 @@ export function Order() {
 
   const [orderDetails, setOrderDetails] = useState();
 
-  function finalizePayment(target) {
-    const cards = target.parentNode;
+  function finalizePayment(cards) {
     const orderItems = cards.querySelectorAll(".mealCard");
 
     let orderDetails = [];
@@ -56,6 +55,10 @@ export function Order() {
 
       setTotal(currentValue);
     })
+
+    const cards = document.querySelector(".cards");
+
+    finalizePayment(cards)
   }, [])
 
   return (
@@ -112,8 +115,7 @@ export function Order() {
                   width < 1024 &&
                   <Button
                     title={"Avançar"}
-                    onClick={(e) => {
-                      finalizePayment(e.target);
+                    onClick={() => {
                       setStep(2);
                     }}
                   />
@@ -126,7 +128,7 @@ export function Order() {
             width >= 1024 &&
             <>
               <h2>Pagamento</h2>
-              <PaymentMethod />
+              <PaymentMethod orderDetails={orderDetails}/>
             </>
           }
         </Content>
