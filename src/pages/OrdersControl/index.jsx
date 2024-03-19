@@ -1,10 +1,14 @@
-import { Container, OrdersContainer, StatusOrder } from "./style";
+import { Container, OrdersContainer, StatusOrder, Options } from "./style";
 import { Header } from "../../components/Header";
 import { Footer } from "../../components/Footer";
 import { Menu } from "../../components/Menu";
 import { Select } from "../../components/Select";
+import { IoIosArrowDown } from "react-icons/io";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "../../hook/auth";
+
+import { api } from "../../services/api";
 
 export function OrdersControl() {
   const [statusMenu, setStatusMenu] = useState("close");
@@ -23,36 +27,71 @@ export function OrdersControl() {
     return setStatusMenu("open");
   }
 
-  const user = {
-    accountType: "common"
+  const { user } = useAuth();
+
+  const [orders, setOrders] = useState([]);
+
+  async function fetchOrder() {
+    const { data } = await api.get("/orders");
+
+    data.map((order) => {
+      order.created_at = order.created_at.split(" ");
+      order.created_at[0] = order.created_at[0].split("-");
+      order.created_at[1] = order.created_at[1].split(":");
+    })
+
+    setOrders(data);
   }
 
-  const history = [
-    {
-      code: "000004",
-      status: "Pendente",
-      date: "2024-02-22 22:04:48",
-      details: "2 x strogonoff de frango, 1 x risoto de camarão, 4 x macarrão à carbonara"
-    },
-    {
-      code: "000004",
-      status: "Preparando",
-      date: "2024-01-22 22:04:48",
-      details: "2 x strogonoff de frango, 1 x risoto de camarão, 4 x macarrão à carbonara"
-    },
-    {
-      code: "000004",
-      status: "Entregue",
-      date: "2024-02-25 19:04:49",
-      details: "2 x strogonoff de frango, 1 x risoto de camarão, 4 x macarrão à carbonara"
-    },
+  const statusOptions = [
+    "Pendente",
+    "Preparando",
+    "Entregue"
   ]
 
-  history.map((order) => {
-    order.date = order.date.split(" ");
-    order.date[0] = order.date[0].split("-");
-    order.date[1] = order.date[1].split(":");
-  })
+  const [isChange, setIsChange] = useState(false);
+
+  const [selectStatus, setSelectStatus] = useState("close");
+
+  function toggleSelectStatus(target) {
+    let container;
+
+    if (target.tagName == "LI") {
+      container = target.parentNode.parentNode;
+    } else {
+      container = target.parentNode;
+    }
+
+    const options = container.querySelector("ul");
+
+    if (selectStatus == "open") {
+      options.style.display = "none";
+      return setSelectStatus("close");
+    }
+
+    options.style.display = "flex";
+
+    return setSelectStatus("open");
+  }
+
+  async function selectOption(value, id, currentStatus) {
+    try {
+      if (value == currentStatus) {
+        return;
+      }
+      await api.patch(`/orders/${id}`, { status: value });
+
+      setIsChange(true);
+    }
+    catch {
+      alert("Não foi possível atualizar o status do pedido");
+    }
+  }
+
+  useEffect(() => {
+    fetchOrder();
+    setIsChange(false);
+  }, [isChange])
 
   return (
     <Container>
@@ -73,7 +112,7 @@ export function OrdersControl() {
             width < 1024 ?
               <>
                 {
-                  history.map((card, index) => (
+                  orders.map((card, index) => (
                     <div
                       className="orderCard"
                       key={index}
@@ -82,20 +121,47 @@ export function OrdersControl() {
                         <p>{card.code}</p>
                         <p>
                           {
-                            card.date[0][2]
+                            card.created_at[0][2]
                             + "/" +
-                            card.date[0][1]
+                            card.created_at[0][1]
                             + " às " +
-                            (card.date[1][0] - 3)
+                            (card.created_at[1][0] - 3)
                             + "h" +
-                            card.date[1][1]
+                            card.created_at[1][1]
                           }
                         </p>
                       </div>
                       <p>
                         {card.details}
                       </p>
-                      <Select variant={"status"}/>
+                      <Select
+                        selectStatus={selectStatus}
+                        action={(e) => toggleSelectStatus(e.currentTarget)}
+                      >
+                        <StatusOrder
+                          className="select"
+                          $orderstatus={card.status}
+                        >
+                          <p>{card.status}</p>
+                          <IoIosArrowDown size={24} />
+                        </StatusOrder>
+                        <Options>
+                          {
+                            statusOptions.map((statusOption, index) => (
+                              <li
+                                key={index}
+                                data-value={statusOption}
+                                onClick={(e) => {
+                                  selectOption(e.target.dataset.value, card.id, card.status);
+                                  toggleSelectStatus(e.target);
+                                }}
+                              >
+                                {statusOption}
+                              </li>
+                            ))
+                          }
+                        </Options>
+                      </Select>
                     </div>
                   ))
                 }
@@ -112,12 +178,43 @@ export function OrdersControl() {
                 </thead>
                 <tbody>
                   {
-                    history.map((card, index) => (
+                    orders.map((card, index) => (
                       <tr
                         key={index}
                       >
                         <StatusOrder $orderstatus={card.status}>
-                          <Select variant={"status"}/>
+                          <Select
+                            selectStatus={selectStatus}
+                            action={(e) => {
+                              toggleSelectStatus(e.currentTarget);
+                              e.stopPropagation();
+                            }}
+                          >
+                            <div
+                              className="select"
+                            >
+                              <p>{card.status}</p>
+                              <IoIosArrowDown size={24} />
+                            </div>
+                            <Options
+                              $selectStatus={selectStatus}
+                            >
+                              {
+                                statusOptions.map((statusOption, index) => (
+                                  <li
+                                    key={index}
+                                    data-value={statusOption}
+                                    onClick={(e) => {
+                                      selectOption(e.target.dataset.value, card.id, card.status);
+                                      toggleSelectStatus(e.target);
+                                    }}
+                                  >
+                                    {statusOption}
+                                  </li>
+                                ))
+                              }
+                            </Options>
+                          </Select>
                         </StatusOrder>
                         <td>{card.code}</td>
                         <td>
@@ -125,13 +222,13 @@ export function OrdersControl() {
                         </td>
                         <td>
                           {
-                            card.date[0][2]
+                            card.created_at[0][2]
                             + "/" +
-                            card.date[0][1]
+                            card.created_at[0][1]
                             + " às " +
-                            (card.date[1][0] - 3)
+                            (card.created_at[1][0] - 3)
                             + "h" +
-                            card.date[1][1]
+                            card.created_at[1][1]
                           }
                         </td>
                       </tr>
