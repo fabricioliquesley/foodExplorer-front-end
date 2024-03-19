@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import { DEVICE_BREAKPOINT } from "../../styles/deviceBreakPoint";
 
 export const Container = styled.div`
     position: relative;
@@ -44,24 +43,4 @@ export const Container = styled.div`
 			border-radius: 50%;
 		}
 	}
-`;
-
-export const Options = styled.ul`
-    display: ${({ $selectStatus }) => $selectStatus == "open" ? "flex" : "none"};
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-    background: ${({ theme }) => theme.COLORS.DARK.DARK900};
-    color: ${({ theme }) => theme.COLORS.LIGHT.LIGHT400};
-    font-size: 1.4rem;
-    padding: 1.6rem;
-    border-radius: 0.5rem;
-    list-style: none;
-    cursor: pointer;
-
-    @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
-        position: absolute;
-        top: 10rem;
-        z-index: 1;
-    }
 `;
