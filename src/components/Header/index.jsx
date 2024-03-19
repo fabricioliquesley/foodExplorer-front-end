@@ -4,9 +4,10 @@ import { Input } from "../Input";
 import { IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import { PiReceipt } from "react-icons/pi";
 import { FiLogOut } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useState } from "react";
+import { useAuth } from "../../hook/auth";
 
 export function Header({ orderAmount, menuStatus, variant, ...res }) {
     const [width, setWidth] = useState(window.document.defaultView.innerWidth);
@@ -14,6 +15,14 @@ export function Header({ orderAmount, menuStatus, variant, ...res }) {
     window.addEventListener("resize", () => {
         setWidth(window.document.defaultView.innerWidth);
     })
+
+    const { signOut } = useAuth();
+    const navigate = useNavigate();
+
+    function executeSignOut() {
+        signOut();
+        navigate("/")
+    }
 
     return (
         <Container>
@@ -97,7 +106,9 @@ export function Header({ orderAmount, menuStatus, variant, ...res }) {
                                     </Link>
                                 </>
                         }
-                        <button>
+                        <button
+                            onClick={executeSignOut}
+                        >
                             <FiLogOut />
                         </button>
                     </>
