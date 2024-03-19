@@ -6,7 +6,7 @@ import { Banner } from "../../components/Banner";
 import { Slider } from "../../components/Slider";
 
 import { useEffect, useState } from "react";
-
+import { useAuth } from "../../hook/auth";
 import { api } from "../../services/api";
 
 export function Home() {
@@ -60,9 +60,7 @@ export function Home() {
         })
     }
 
-    const user = {
-        accountType: "common"
-    }
+    const { user } = useAuth();
 
     useEffect(() => {
         fetchOrderItems();
@@ -108,7 +106,7 @@ export function Home() {
                         data={drink}
                         variant={user.accountType}
                     />
-                }    
+                }
             </main>
             <Footer />
         </Container>
