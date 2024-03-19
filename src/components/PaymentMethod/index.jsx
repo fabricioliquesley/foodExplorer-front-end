@@ -22,6 +22,10 @@ export function PaymentMethod({ orderDetails }) {
             return alert("Preencha os dados");
         }
 
+        if (orderDetails.length == 0){
+            return alert("Acrescente itens no pedido");
+        }
+
         try {
             await api.post("/orders", { orderDetails });
 
