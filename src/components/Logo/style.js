@@ -11,6 +11,7 @@ export const Container = styled.div`
         display: flex;
         align-items: center;
         gap: 1rem;
+        cursor: pointer;
 
         > img {
             filter: ${({ $variant }) => $variant == "footer" ? "grayscale(1)" : "grayscale(0)"};
