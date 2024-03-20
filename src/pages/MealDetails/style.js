@@ -13,7 +13,7 @@ position: relative;
         display: flex;
         overflow: ${({ $statusMenu }) => $statusMenu == "open" ? "hidden" : "auto"};
     }
-    `;
+`;
 
 export const Content = styled.div`
     display: flex;
@@ -30,8 +30,13 @@ export const Content = styled.div`
 
     @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
         flex-direction: row;
-        max-width: 100%;
+        justify-content: center;
+        max-width: 80%;
         gap: 5rem;
+    }
+
+    @media (min-width: ${DEVICE_BREAKPOINT.XL}) {
+        max-width: 60%;
     }
 `;
 
@@ -40,6 +45,7 @@ export const Left = styled.div`
     flex-direction: column;
     align-items: center;
     width: 70%;
+    max-width: 37rem;
     height: fit-content;
 
     > a {
