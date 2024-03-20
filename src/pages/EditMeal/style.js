@@ -46,6 +46,10 @@ export const Content = styled.div`
             border: none;
             border-radius: .5rem;
         }
+
+        @media (min-width: ${DEVICE_BREAKPOINT.MD}) {
+            justify-content: flex-end;
+        }
     }
 
     @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
@@ -95,5 +99,29 @@ export const Content = styled.div`
         .buttonsContainer {
             grid-area: buttonsContainer;
         }
+    }
+`;
+
+export const Options = styled.ul`
+	display: none;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    background: ${({ theme }) => theme.COLORS.DARK.DARK900};
+    color: ${({ theme }) => theme.COLORS.LIGHT.LIGHT400};
+    font-size: 1.4rem;
+    padding: 1.6rem;
+    border-radius: 0.5rem;
+    list-style: none;
+    cursor: pointer;
+
+	&.open {
+		display: flex;
+	}
+
+    @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
+        position: absolute;
+        top: 10rem;
+        z-index: 1;
     }
 `;
