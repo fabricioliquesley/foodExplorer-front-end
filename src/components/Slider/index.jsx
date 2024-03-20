@@ -49,15 +49,27 @@ export function Slider({ title, data, variant }) {
           spacing: 16
         }
       },
-      "((min-width: 600px) and (max-width: 768px))": {
+      "((min-width: 600px) )": {
         slides: {
           perView: 2.5,
           spacing: 16
         }
       },
-      "(min-width: 769px)": {
+      "((min-width: 769px) and (max-width: 1179px))": {
         slides: {
-          perView: 3.2,
+          perView: 3.7,
+          spacing: 16
+        }
+      },
+      "(min-width: 1180px)": {
+        slides: {
+          perView: 4,
+          spacing: 16
+        }
+      },
+      "(min-width: 1200px)": {
+        slides: {
+          perView: 4.5,
           spacing: 16
         }
       },
