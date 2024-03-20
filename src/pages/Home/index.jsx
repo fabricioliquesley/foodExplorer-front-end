@@ -32,12 +32,15 @@ export function Home() {
         setItemsQuantity(JSON.parse(localStorage.getItem("@foodExplorer:orderItems"))?.length || 0)
     }
 
+    const [search, setSearch] = useState("");
     const [mainCourse, setMainCourse] = useState([]);
     const [dessert, setDessert] = useState([]);
     const [drink, setDrink] = useState([]);
 
     async function fetchMealData() {
-        const response = await api.get("/meals");
+        const response = await api.get(`/meals?search=${search}`);
+
+        // return console.log(response);
 
         response.data.forEach(meal => {
             const img_url = `${api.defaults.baseURL}/files/${meal.image_path}`;
@@ -69,6 +72,16 @@ export function Home() {
         setInterval(fetchOrderItems, 5000);
     }, [])
 
+    useEffect(() => {
+        if (search != "") {
+            setMainCourse([]);
+            setDrink([]);
+            setDessert([]);
+
+            fetchMealData();
+        }
+    }, [search])
+
     return (
         <Container $statusMenu={statusMenu}>
             <Header
@@ -76,11 +89,16 @@ export function Home() {
                 orderAmount={itemsQuantity}
                 onClick={() => toggleMenu()}
                 variant={user.accountType}
+                search={(e) => setSearch(e.target.value)}
             />
             <main>
                 {
                     width < 1024 &&
-                    <Menu status={statusMenu} variant={user.accountType} />
+                    <Menu 
+                        status={statusMenu} 
+                        variant={user.accountType}
+                        action={(e) => setSearch(e.target.value)}
+                    />
                 }
                 <Banner />
                 {

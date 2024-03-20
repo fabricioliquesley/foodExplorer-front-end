@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../hook/auth";
 
-export function Header({ orderAmount, menuStatus, variant, ...res }) {
+export function Header({ orderAmount, menuStatus, variant, search, ...res }) {
     const [width, setWidth] = useState(window.document.defaultView.innerWidth);
 
     window.addEventListener("resize", () => {
@@ -21,11 +21,21 @@ export function Header({ orderAmount, menuStatus, variant, ...res }) {
 
     function executeSignOut() {
         signOut();
-        navigate("/")
+        navigate("/");
+    }
+
+    function navigateToHome(target){
+        if(target.tagName == "INPUT"){
+            navigate("/");
+        }
+        
+        return
     }
 
     return (
-        <Container>
+        <Container
+            onClick={(e) => navigateToHome(e.target)}
+        >
             {
                 width < 1024 &&
                 <button {...res}>
@@ -41,6 +51,7 @@ export function Header({ orderAmount, menuStatus, variant, ...res }) {
                     variant
                     placeholder="Busque por pratos ou ingredientes"
                     type="text"
+                    onChange={search}
                 />
             }
             {
