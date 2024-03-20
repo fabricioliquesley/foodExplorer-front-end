@@ -140,7 +140,7 @@ export function CreateMeal() {
                 variant={user.accountType}
             />
             <main>
-                <Menu status={statusMenu} />
+                <Menu status={statusMenu} variant={user.accountType}/>
                 <Content>
                     <Link to={-1} className="link">
                         <IoIosArrowBack />
