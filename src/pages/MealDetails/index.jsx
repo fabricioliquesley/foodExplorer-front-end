@@ -10,6 +10,7 @@ import { ACCOUNT_TYPE } from "../../utils/accountType";
 
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useAuth } from "../../hook/auth";
 
 import { api } from "../../services/api";
 
@@ -99,9 +100,7 @@ export function MealDetails() {
         return localStorage.setItem("@foodExplorer:orderItems", JSON.stringify(orderItems));
     }
 
-    const user = {
-        accountType: "adminc"
-    }
+    const { user } = useAuth();
 
     const params = useParams();
 
@@ -177,7 +176,7 @@ export function MealDetails() {
                             {
                                 [ACCOUNT_TYPE.ADMIN].includes(user.accountType) ?
                                     <Link
-                                        to={"/edit/4f474d2f-eb71-4ac9-88c7-3a0aabb8e261"}
+                                        to={`/edit/${meal.id}`}
                                         className="editBtn"
                                     >
                                         Editar prato
