@@ -202,6 +202,10 @@ export function Slider({ title, data, variant }) {
     return result;
   }
 
+  function navigateToEditMeal(id){
+    navigate(`/edit/${id}`);
+  }
+
   const user = {
     accountType: "admin"
   }
@@ -227,6 +231,10 @@ export function Slider({ title, data, variant }) {
                     variant == "admin" ?
                       <button
                         className='favoriteBtn'
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigateToEditMeal(meal.id);
+                        }}
                       >
                         <PiPencilSimple />
                       </button>
@@ -294,7 +302,13 @@ export function Slider({ title, data, variant }) {
                   >
                     {
                       variant == "admin" ?
-                        <button className='favoriteBtn'>
+                        <button 
+                          className='favoriteBtn'
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigateToEditMeal(meal.id);
+                          }}
+                        >
                           <PiPencilSimple />
                         </button>
                         :
