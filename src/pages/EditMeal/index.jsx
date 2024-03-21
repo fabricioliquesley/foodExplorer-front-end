@@ -106,6 +106,8 @@ export function EditMeal() {
                 await api.patch(`/meals/image/${mealDetail.id}`, fileUploadForm);
             }
 
+            return navigate("/");
+
         } catch (error) {
             if (error.response) {
                 return alert(error.response.data.message);
