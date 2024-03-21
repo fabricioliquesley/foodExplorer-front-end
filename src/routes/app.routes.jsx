@@ -8,6 +8,7 @@ import { Order } from "../pages/Order";
 import { Favorites } from "../pages/Favorites";
 import { OrdersHistory } from "../pages/OrdersHistory";
 import { OrdersControl } from "../pages/OrdersControl";
+import { NotFound } from "../pages/NotFound";
 
 export function AppRoutes() {
     return (
@@ -20,6 +21,7 @@ export function AppRoutes() {
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/orders/history" element={<OrdersHistory />} />
             <Route path="/orders/control" element={<OrdersControl />} />
+            <Route path="*" element={<NotFound />} />
         </Routes>
     )
 }
