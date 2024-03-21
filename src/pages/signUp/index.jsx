@@ -23,6 +23,10 @@ export function SignUp() {
             return alert("Preencha todos os campos");
         }
 
+        if (password.length < 6){
+            return alert("A senha deve ser de no mínimo 6 caracteres");
+        }
+
         try {
             await api.post("/users", {
                 name,
