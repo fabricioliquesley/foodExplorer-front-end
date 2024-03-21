@@ -15,6 +15,7 @@ export const Container = styled.div`
     }
 
     .slider {
+        position: relative;
         width: 100%;
         
         .slide {
@@ -91,6 +92,19 @@ export const Container = styled.div`
             }
         }
 
+        &.pc-slider::after, &.pc-slider::before {
+            position: absolute;
+            content: "";
+            width: 10rem;
+            height: 100%;
+            background: #000a0f7e;
+        }
+
+        &.pc-slider::before {
+            right: 0;
+            z-index: 1;
+        }
+
         @media (min-width: ${DEVICE_BREAKPOINT.LG}) {
             >.slide .preco {
                 font-size: 2rem;
@@ -111,6 +125,7 @@ export const Container = styled.div`
         height: 3rem;
         fill: #fff;
         cursor: pointer;
+        z-index: 2;
     }
 
     .arrow--left {

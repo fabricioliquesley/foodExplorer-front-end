@@ -30,6 +30,18 @@ export default createGlobalStyle`
         outline: none;
     }
 
+    main::-webkit-scrollbar {
+        width: 0.8rem;
+    }
+
+    main::-webkit-scrollbar-track {
+        background-color: #000A0F;
+    }
+    
+    main::-webkit-scrollbar-thumb {
+        background-color: #00070A;
+    }
+
     a {
         text-decoration: none;
     }

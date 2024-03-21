@@ -304,7 +304,7 @@ export function Slider({ title, data, variant }) {
           </div>
           :
           <div className="navigation-wrapper navigation">
-            <div ref={sliderRef} className="keen-slider slider">
+            <div ref={sliderRef} className="keen-slider slider pc-slider">
               {
                 data.map((meal, index) => (
                   <div
